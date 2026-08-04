@@ -1,0 +1,21 @@
+includes:
+    - ../vendor/ergebnis/phpstan-rules/rules.neon
+
+parameters:
+    ergebnis:
+        allRules: true
+
+        noExtends:
+            enabled: false
+
+        noNamedArgument:
+            enabled: false
+
+        noNullableReturnTypeDeclaration:
+            enabled: false
+
+        noParameterWithNullableTypeDeclaration:
+            enabled: false
+
+        noParameterWithNullDefaultValue:
+            enabled: false

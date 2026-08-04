@@ -1,0 +1,60 @@
+includes:
+    - phar://phpstan.phar/conf/bleedingEdge.neon
+    - phpstan/canvural.neon
+    - phpstan/ergebnis.neon
+    - phpstan/larastan.neon
+    - phpstan/nesbot.neon
+    - phpstan/pestphp.neon
+    - phpstan/shipmonk.neon
+    - phpstan/spaze.neon
+    - phpstan/tomasvotruba.neon
+    - vendor/phpstan/phpstan-deprecation-rules/rules.neon
+    - vendor/phpstan/phpstan-phpunit/extension.neon
+    - vendor/phpstan/phpstan-phpunit/rules.neon
+    - vendor/phpstan/phpstan-strict-rules/rules.neon
+
+parameters:
+    level: max
+
+    excludePaths:
+        - public/frankenphp-worker.php (?)
+
+    paths:
+        - app
+        - bootstrap/app.php
+        - config
+        - database
+        - public
+        - routes
+        - tests
+
+    checkBenevolentUnionTypes: true
+    checkClassCaseSensitivity: true
+    checkImplicitMixed: true
+    checkMissingCallableSignature: true
+    checkMissingOverridePropertyAttribute: true
+    checkTooWideParameterOutInProtectedAndPublicMethods: true
+    checkTooWideReturnTypesInProtectedAndPublicMethods: true
+    checkTooWideThrowTypesInProtectedAndPublicMethods: true
+    checkUninitializedProperties: true
+    phpVersion: 80500
+    rememberPossiblyImpureFunctionValues: false
+    reportAlwaysTrueInLastCondition: true
+    reportAnyTypeWideningInVarTag: true
+    reportIgnoresWithoutComments: true
+    reportMaybesInPropertyPhpDocTypes: true
+    reportPossiblyNonexistentConstantArrayOffset: true
+    reportPossiblyNonexistentGeneralArrayOffset: true
+    reportUnsafeArrayStringKeyCasting: prevent
+    treatPhpDocTypesAsCertain: false
+
+    exceptions:
+        check:
+            throwTypeCovariance: true
+            tooWideImplicitThrowType: true
+
+    featureToggles:
+        reportNestedTooWideType: true
+
+    strictRules:
+        dynamicCallOnStaticMethod: false

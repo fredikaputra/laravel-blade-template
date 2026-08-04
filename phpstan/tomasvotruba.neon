@@ -1,0 +1,20 @@
+includes:
+    - ../vendor/tomasvotruba/cognitive-complexity/config/extension.neon
+    - ../vendor/tomasvotruba/type-coverage/config/extension.neon
+
+parameters:
+    type_coverage:
+        constant_type: 100
+        declare: 100
+        param_type: 100
+        property_type: 100
+        return_type: 100
+
+    type_perfect:
+        narrow_param: true
+        narrow_return: true
+        no_empty_on_object: true
+        no_isset_on_object: true
+        no_mixed: true
+        no_param_type_removal: true
+        null_over_false: true

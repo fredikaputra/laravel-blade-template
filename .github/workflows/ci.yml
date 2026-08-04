@@ -1,0 +1,130 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Check Changed Paths
+        if: github.ref != 'refs/heads/main'
+        id: filter
+        uses: dorny/paths-filter@v4
+        with:
+          predicate-quantifier: 'some-with-excludes'
+          filters: |
+            code:
+              - '**'
+              - '!*.md'
+              - '!**/*.md'
+              - '!.devcontainer/**'
+              - '!.dockerignore'
+              - '!.env.example'
+              - '!.gitattributes'
+              - '!.gitignore'
+              - '!Dockerfile'
+
+      - name: Setup PHP
+        if: steps.filter.outputs.code == 'true' || github.ref == 'refs/heads/main'
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.5'
+          tools: composer:v2, composer-unused
+          coverage: pcov
+          ini-values: |
+            memory_limit=-1
+
+      - name: Cache Composer Dependencies
+        if: steps.filter.outputs.code == 'true' || github.ref == 'refs/heads/main'
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/composer
+          key: ${{ runner.os }}-php-8.5-composer-${{ hashFiles('composer.lock') }}
+          restore-keys: ${{ runner.os }}-php-8.5-composer-
+
+      - name: Install Dependencies
+        if: steps.filter.outputs.code == 'true' || github.ref == 'refs/heads/main'
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader --no-progress
+
+      - name: Audit Dependencies & Manifest
+        if: steps.filter.outputs.code == 'true' || github.ref == 'refs/heads/main'
+        run: composer test:composer
+
+      - name: Restore Static Analysis Cache
+        if: steps.filter.outputs.code == 'true' || github.ref == 'refs/heads/main'
+        id: restore-analysis
+        uses: actions/cache/restore@v6
+        with:
+          path: |
+            /tmp/phpstan
+            /tmp/rector
+          key: ${{ runner.os }}-php-8.5-analysis-${{ hashFiles('composer.lock', 'phpstan.neon', 'rector.php') }}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-php-8.5-analysis-${{ hashFiles('composer.lock', 'phpstan.neon', 'rector.php') }}-
+
+      - name: Restore Mutation Cache
+        if: steps.filter.outputs.code == 'true' || github.ref == 'refs/heads/main'
+        id: restore-mutation
+        uses: actions/cache/restore@v6
+        with:
+          path: vendor/pestphp/pest-plugin-mutate/.temp
+          key: ${{ runner.os }}-php-8.5-pest-mutate-${{ hashFiles('composer.lock', 'phpunit.xml') }}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-php-8.5-pest-mutate-${{ hashFiles('composer.lock', 'phpunit.xml') }}-
+
+      - name: Linters & Code Standards
+        if: steps.filter.outputs.code == 'true' || github.ref == 'refs/heads/main'
+        id: linters
+        run: composer test:lint
+
+      - name: Static Analysis & Type Coverage
+        if: steps.filter.outputs.code == 'true' || github.ref == 'refs/heads/main'
+        id: static-analysis
+        run: composer test:types
+
+      - name: Save Static Analysis Cache
+        if: github.ref == 'refs/heads/main' && steps.static-analysis.outcome == 'success' && steps.restore-analysis.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v6
+        with:
+          path: |
+            /tmp/phpstan
+            /tmp/rector
+          key: ${{ runner.os }}-php-8.5-analysis-${{ hashFiles('composer.lock', 'phpstan.neon', 'rector.php') }}-${{ github.sha }}
+
+      - name: Run Tests (Strict)
+        if: steps.filter.outputs.code == 'true' || github.ref == 'refs/heads/main'
+        id: tests
+        run: composer test:unit
+
+      - name: Run Mutation Tests
+        if: steps.filter.outputs.code == 'true' || github.ref == 'refs/heads/main'
+        id: mutation
+        run: composer test:mutate
+
+      - name: Save Mutation Cache
+        if: github.ref == 'refs/heads/main' && steps.mutation.outcome == 'success' && steps.restore-mutation.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v6
+        with:
+          path: vendor/pestphp/pest-plugin-mutate/.temp
+          key: ${{ runner.os }}-php-8.5-pest-mutate-${{ hashFiles('composer.lock', 'phpunit.xml') }}-${{ github.sha }}

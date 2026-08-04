@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         beStrictAboutChangesToGlobalState="true"
+         beStrictAboutOutputDuringTests="true"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         executionOrder="random"
+         failOnAllIssues="true"
+>
+    <testsuites>
+        <testsuite name="Feature">
+            <directory>tests/Feature</directory>
+        </testsuite>
+        <testsuite name="Unit">
+            <directory>tests/Unit</directory>
+        </testsuite>
+    </testsuites>
+    <source ignoreSuppressionOfDeprecations="true"
+            ignoreSuppressionOfErrors="true"
+            ignoreSuppressionOfNotices="true"
+            ignoreSuppressionOfPhpDeprecations="true"
+            ignoreSuppressionOfPhpNotices="true"
+            ignoreSuppressionOfPhpWarnings="true"
+            ignoreSuppressionOfWarnings="true"
+    >
+        <include>
+            <directory>app</directory>
+        </include>
+    </source>
+    <php>
+        <env name="APP_ENV" value="testing"/>
+    </php>
+</phpunit>

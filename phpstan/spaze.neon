@@ -1,0 +1,29 @@
+includes:
+    - ../vendor/spaze/phpstan-disallowed-calls/disallowed-dangerous-calls.neon
+    - ../vendor/spaze/phpstan-disallowed-calls/disallowed-execution-calls.neon
+    - ../vendor/spaze/phpstan-disallowed-calls/disallowed-insecure-calls.neon
+    - ../vendor/spaze/phpstan-disallowed-calls/disallowed-loose-calls.neon
+    - ../vendor/spaze/phpstan-disallowed-calls/disallowed-non-timing-safe-calls.neon
+    - ../vendor/spaze/phpstan-disallowed-calls/extension.neon
+
+parameters:
+    disallowedStaticCalls:
+        -
+            allowIn:
+                - '*/config/*'
+            message: 'use config() instead of Env::get() outside of configuration files'
+            method: 'Illuminate\Support\Env::get()'
+
+    disallowedSuperglobals:
+        -
+            message: 'use the Request object, Cookie, or Session facades instead of superglobals'
+            superglobal:
+                - '$GLOBALS'
+                - '$_COOKIE'
+                - '$_ENV'
+                - '$_FILES'
+                - '$_GET'
+                - '$_POST'
+                - '$_REQUEST'
+                - '$_SERVER'
+                - '$_SESSION'

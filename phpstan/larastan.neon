@@ -1,0 +1,14 @@
+includes:
+    - ../vendor/larastan/larastan/extension.neon
+
+parameters:
+    checkAuthCallsWhenInRequestScope: true
+    checkConfigTypes: true
+    checkMissingTranslations: true
+    checkModelMethodVisibility: true
+    checkModelProperties: true
+    checkOctaneCompatibility: true
+    enableMigrationCache: true
+    generalizeEnvReturnType: true
+    noUnnecessaryEnumerableToArrayCalls: true
+    parseModelCastsMethod: true

@@ -1,0 +1,13 @@
+includes:
+    - ../vendor/canvural/larastan-strict-rules/rules.neon
+
+parameters:
+    larastanStrictRules:
+        allRules: false
+        listenerShouldHaveVoidReturnType: true
+        noDynamicWhere: true
+        noValidationInController: true
+        scopeShouldReturnQueryBuilder: true
+
+    listenerPaths:
+        - app/Listeners

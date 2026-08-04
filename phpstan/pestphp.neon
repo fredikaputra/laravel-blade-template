@@ -1,0 +1,2 @@
+includes:
+    - ../vendor/pestphp/pest-plugin-phpstan/extension.neon

@@ -1,0 +1,28 @@
+{
+    "timings": {
+        "Tests\\Feature\\McpTest": 0.4138,
+        "Tests\\Unit\\Actions\\Fortify\\CreateNewUserTest": 1.1132,
+        "Tests\\Unit\\Actions\\Fortify\\ResetUserPasswordTest": 0.9148,
+        "Tests\\Unit\\Actions\\Fortify\\UpdateUserPasswordTest": 0.3885,
+        "Tests\\Unit\\Actions\\Fortify\\UpdateUserProfileInformationTest": 0.4863,
+        "Tests\\Unit\\Actions\\Storage\\AbortMultipartUploadTest": 0.0451,
+        "Tests\\Unit\\Actions\\Storage\\CompleteMultipartUploadTest": 0.1016,
+        "Tests\\Unit\\Actions\\Storage\\CreateMultipartUploadTest": 0.1593,
+        "Tests\\Unit\\Actions\\Storage\\ListMultipartUploadPartsTest": 0.1413,
+        "Tests\\Unit\\Actions\\Storage\\SignMultipartUploadPartTest": 0.0871,
+        "Tests\\Unit\\ArchTest": 1.3212,
+        "Tests\\Unit\\Broadcasting\\ChannelTest": 0.0963,
+        "Tests\\Unit\\Concerns\\PasswordValidationRulesTest": 0.0342,
+        "Tests\\Unit\\Console\\ScheduleTest": 0.0365,
+        "Tests\\Unit\\Http\\Controllers\\HomeControllerTest": 0.218,
+        "Tests\\Unit\\Http\\Controllers\\UserControllerTest": 0.1873,
+        "Tests\\Unit\\Http\\Middleware\\EnsureSecurityHeadersTest": 0.0701,
+        "Tests\\Unit\\Models\\UserTest": 0.2977,
+        "Tests\\Unit\\Policies\\UserPolicyTest": 0.0885,
+        "Tests\\Unit\\Providers\\AppServiceProviderTest": 0.5105,
+        "Tests\\Unit\\Providers\\FortifyServiceProviderTest": 0.0773,
+        "Tests\\Unit\\UserResourceTest": 0.0878
+    },
+    "checksum": "27cf88f179952731a31e13cb5123c9c1",
+    "updated_at": "2026-09-08T04:54:08+00:00"
+}
