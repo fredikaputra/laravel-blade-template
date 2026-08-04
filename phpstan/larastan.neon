@@ -1,0 +1,22 @@
+includes:
+    - ../vendor/larastan/larastan/extension.neon
+
+parameters:
+    checkAuthCallsWhenInRequestScope: true
+    checkBatchableJobChecksCancellation: true
+    checkBatchedJobIsBatchable: true
+    checkConfigTypes: true
+    checkDispatchInTransactionAfterCommit: true
+    checkJobSerializesModels: true
+    checkMissingTranslations: true
+    checkModelMethodVisibility: true
+    checkModelProperties: true
+    checkOctaneCompatibility: true
+    checkUniqueJobUniqueFor: true
+    checkUniqueJobUniqueId: true
+    checkUnusedViews: true
+    generalizeEnvReturnType: true
+    noBatchedUniqueJob: true
+    noImplicitQueryBuilderCall: true
+    noUnnecessaryEnumerableToArrayCalls: true
+    parseModelCastsMethod: true

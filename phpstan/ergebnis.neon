@@ -1,0 +1,10 @@
+includes:
+    - ../vendor/ergebnis/phpstan-rules/rules.neon
+
+parameters:
+    ergebnis:
+        noExtends:
+            enabled: false
+
+        noNamedArgument:
+            enabled: false

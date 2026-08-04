@@ -1,0 +1,10 @@
+includes:
+    - ../vendor/canvural/larastan-strict-rules/rules.neon
+
+parameters:
+    larastanStrictRules:
+        noFacade: false
+        noGlobalLaravelFunction: false
+
+    listenerPaths:
+        - app/Listeners
